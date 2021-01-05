@@ -1,0 +1,28 @@
+
+.all_teams {
+    margin-top: 100px;
+}
+
+.team_logos_container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.team_logo {
+    margin: 15px;
+    border-radius: 10px;
+}
+
+.team_logo:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+    box-shadow: 3px 3px 23px black;
+}
+
+.team_logo img {
+    width: 130px;
+    height: 130px;
+    padding: 5px;
+    box-shadow: 3px 3px 13px black;
+    border-radius: 10px;
+}

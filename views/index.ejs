@@ -1,0 +1,20 @@
+<%- include("partials/header.ejs") %>
+
+    <div class="container">
+        <div class="all_teams">
+            <div>
+                <h3>View team stats</h3>
+            </div>
+            <div class="team_logos_container">
+                <% for(let team of teams) { %>
+                    <a href="/team/<%= team._id %>">
+                        <div class="team_logo">
+                            <img src="images/teams/<%=team.teamLogo%>" alt="<%=team.teamName%> logo">
+                        </div>
+                    </a>
+                    <% } %>
+            </div>
+        </div>
+    </div>
+
+    <%- include("partials/footer.ejs") %>

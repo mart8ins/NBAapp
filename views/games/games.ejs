@@ -2,26 +2,47 @@
 
     <div class="container">
         <div class="all_games_container">
-            <h5>Games</h5>
-
-            <div class="row game">
-                <div class="col-2 left">
-                    <img src="/images/ball.png" width="100px" alt="basketball">
-                </div>
-                <div class="col-10 right">
-                    <div class="team">
-                        <a class="for_center" href="">Dallas</a>
-                    </div>
-                    <div class="result">
-                        <span class="for_center">100:400</span>
-                    </div>
-                    <div class="team">
-                        <a class="for_center" href="">Boston</a>
-                    </div>
-                </div>
+            <div class="gamesHead">
+                <h5>View game results</h5>
+                <a id="addNewGame" href="/games/new">Add game data</a>
             </div>
 
+            <% for(let game of games) { %>
+                <a
+                    href="/games/<%= game._id %>?winner=<%= game.winner.team %>?looser=<%= game.looser.team %>">
+                    <div class="row game">
+                        <div class="col-2 left">
+                            <img src="/images/ball.png" width="100px" alt="basketball">
+                        </div>
+                        <div class="col-2 center">
+                            <div>
+                                <%= game.gameDate %>
+                            </div>
+                        </div>
 
+                        <div class="col-2 winner_team">
+                            <%= game.winner.team %>
+                        </div>
+                        <div class="col-4 result">
+                            <div class="row">
+                                <div class="score">
+                                    <%= game.winner.score %> : <%= game.looser.score %>
+                                            <% if(game.overtime) { %>
+                                                <span>
+                                                    OT
+                                                </span>
+                                                <% }%>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 looser_team">
+                            <%= game.looser.team %>
+                        </div>
+                    </div>
+                </a>
+
+
+                <%} %>
 
         </div>
     </div>

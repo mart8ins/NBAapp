@@ -1,0 +1,35 @@
+<%- include("../partials/header.ejs") %>
+    <div class="container">
+        <div class="game_details_container">
+            <div class="game_details_head">
+                <div class="detailsTeam">
+                    <%= game.winner.team %>
+                </div>
+                <div class="detailsScore">
+                    <%= game.winner.score %>
+                </div>
+                <div class="final">
+                    Final
+                </div>
+                <div class="detailsScore">
+                    <%= game.looser.score %>
+                </div>
+                <div class="detailsTeam">
+                    <%= game.looser.team %>
+                </div>
+            </div>
+
+            <div class="game_details_data">
+                <table>
+                    <tr>
+                        <th>Home team</th>
+                        <td>
+                            <%= game.homeTeam %>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <%- include("../partials/footer.ejs") %>

@@ -1,13 +1,107 @@
-.all_games_container {
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.all_games_container, .game_details_container, .game_form_container {
     margin-top: 100px;
 }
 
 .game {
     box-shadow: 2px 2px 2px 2px black;
+    margin-bottom: 15px;
 }
 
-.right {
+.gamesHead {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+#addNewGame {
+    font-size: 20px;
+    border: 1px solid grey;
+    background-color: rgb(56, 54, 54);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+#addNewGame:hover {
+    background-color: rgb(100, 97, 97);
+}
+
+.game:hover {
+    transform: scale(1.02);
+}
+
+.score {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.right, .center, .winner_team, .looser_team, .result {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+}
+
+.winner_team , .looser_team  {
+    padding: 5px;
+    font-size: 16px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: black;
+}
+
+.winner_team, .looser_team {
+ border-left: 1px solid black;
+ border-right: 1px solid black;
+}
+
+/* Details about game */
+.game_details_head {
+    text-transform: uppercase;
+    padding: 5px 15px;
+    display: flex;
+    justify-content: space-evenly;
+    width: 80%;
+    margin: 0 auto;
+    background-color: rgba(71, 42, 233, 0.986);
+}
+
+.final {
+    color: white;
+    text-transform: lowercase;
+}
+
+.detailsTeam {
+    background-color: rgb(243, 232, 232); 
+    padding: 5px 15px;
+}
+
+.detailsTeam, .detailsScore {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.detailsScore {
+    color: white;
+}
+
+table {
+    width: 65%;
+    margin: 10px auto;
+    text-align: center;
+}
+
+/* to add new game/result */
+.game_form_container form {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.game_form_container form div {
+ color: blue;
 }

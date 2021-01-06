@@ -44,8 +44,8 @@ module.exports.games = [
             score: 132
         },
         looser: {
-            team: "Dallas Maverics",
-            score: 103
+            team: "Cleveland Cavaliers",
+            score: 131
         },
         homeTeam: "Cleveland Cavaliers",
         gameDate: new Date(),

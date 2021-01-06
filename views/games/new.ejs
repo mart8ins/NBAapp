@@ -1,0 +1,81 @@
+<%- include("../partials/header.ejs") %>
+    <div class="container">
+        <div class="game_form_container">
+            <form action="/games" method="POST">
+                <!-- winners team and score -->
+                <div>
+                    <label for="winner">Winner</label>
+                    <div>
+                        <select name="winner" id="winner">
+                            <% for(let team of teams) { %>
+                                <option value="<%= team.teamName %>">
+                                    <%= team.teamName %>
+                                </option>
+                                <% } %>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="winnerScore">Score</label>
+                        <div>
+                            <input type="number" id="winnerScore" name="winnerScore">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- loosers team and score -->
+                <div>
+                    <label for="looser">Looser</label>
+                    <div>
+                        <select name="looser" id="looser">
+                            <% for(let team of teams) { %>
+                                <option value="<%= team.teamName %>">
+                                    <%= team.teamName %>
+                                </option>
+                                <% } %>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="looserScore">Score</label>
+                        <div>
+                            <input type="number" id="loosersScore" name="looserScore">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- home team  -->
+                <div>
+                    <label for="teamHome">Home team</label>
+                    <div>
+                        <select name="teamHome" id="teamHome">
+                            <% for(let team of teams) { %>
+                                <option value="<%= team.teamName %>">
+                                    <%= team.teamName %>
+                                </option>
+                                <% } %>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- overtime? -->
+                <div>
+                    <input type="checkbox" id="overtime" name="overtime" value="true">
+                    <label for="overtime">Game ended in overtime</label><br>
+                </div>
+
+                <div>
+                    <label for="gameDay">Game day</label>
+                    <div>
+                        <input type="date" id="gameDay" name="gameDay">
+                    </div>
+                </div>
+
+                <button>
+                    Add
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+    <%- include("../partials/footer.ejs") %>

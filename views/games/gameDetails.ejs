@@ -10,6 +10,9 @@
                 </div>
                 <div class="final">
                     Final
+                    <% if(game.overtime) {%>
+                        OT
+                        <% } %>
                 </div>
                 <div class="detailsScore">
                     <%= game.looser.score %>

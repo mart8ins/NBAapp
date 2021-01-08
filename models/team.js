@@ -5,7 +5,15 @@ const Schema = mongoose.Schema;
 const teamSchema = new Schema({
     teamName: String,
     teamCity: String,
-    teamLogo: String
+    teamLogo: String,
+    rooster:
+        [{
+            name: String,
+            position: String,
+            jerseyNumber: Number,
+            about: String
+        }]
+
 })
 
 

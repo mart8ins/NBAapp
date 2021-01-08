@@ -4,11 +4,17 @@ const Schema = mongoose.Schema;
 
 const gameSchema = new Schema({
     winner: {
-        team: String,
+        team: {
+            type: String,
+            text: true
+        },
         score: Number
     },
     looser: {
-        team: String,
+        team: {
+            type: String,
+            text: true
+        },
         score: Number
     },
     homeTeam: String,

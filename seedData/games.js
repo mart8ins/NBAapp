@@ -1,24 +1,24 @@
 module.exports.games = [
     {
         winner: {
-            team: "Boston Celtics",
+            team: "Celtics",
             score: 102
         },
         looser: {
-            team: "New York Knicks",
+            team: "Knicks",
             score: 90
         },
-        homeTeam: "Boston Celtics",
+        homeTeam: "New York Knicks",
         gameDate: new Date(),
         overtime: false
     },
     {
         winner: {
-            team: "Boston Celtics",
+            team: "Celtics",
             score: 98
         },
         looser: {
-            team: "Chicago Bulls",
+            team: "Bulls",
             score: 85
         },
         homeTeam: "Boston Celtics",
@@ -27,11 +27,11 @@ module.exports.games = [
     },
     {
         winner: {
-            team: "Chicago Bulls",
+            team: "Bulls",
             score: 122
         },
         looser: {
-            team: "Cleveland Cavaliers",
+            team: "Cavaliers",
             score: 120
         },
         homeTeam: "Cleveland Cavaliers",
@@ -40,11 +40,11 @@ module.exports.games = [
     },
     {
         winner: {
-            team: "Dallas Maverics",
+            team: "Mavericks",
             score: 132
         },
         looser: {
-            team: "Cleveland Cavaliers",
+            team: "Cavaliers",
             score: 131
         },
         homeTeam: "Cleveland Cavaliers",

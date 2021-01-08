@@ -16,3 +16,29 @@ text-transform: uppercase;
     margin-top: 15px;
     padding: 15px;
 }
+
+/* team details page*/
+.allWins {
+color: green;
+}
+
+.allLosses {
+color: red;
+}
+
+.gamePlayed {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.gamePlayed .gameData {
+    border: 1px solid black;
+    width: 100%;
+    margin: 5px;
+    padding: 10px;
+}
+
+.gameData {
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,0 +1,71 @@
+<%- include("../partials/header.ejs") %>
+
+    <div class="container">
+        <div class="team_details_container">
+            <div class="team_details_heading" style="background-image: url('/images/teams/<%= team.teamLogo %>');">
+                <h4>
+                    <%= team.teamCity %>
+                        <%= team.teamName %>
+                </h4>
+            </div>
+
+            <div class="team_details_stats">
+                <div class="played_games row">
+                    <div class="col allWins">
+                        <h5>Wins over</h5>
+                        <div class="gamePlayed">
+                            <% for(let win of winnedGames) {%>
+                                <% let d=win.gameDate.toDateString() %>
+                                    <div class="gameData">
+                                        <div>
+                                            <% if(win.looser.team==win.homeTeam) {%>
+                                                @
+                                                <% } %>
+                                                    <%= win.looser.team %>
+                                        </div>
+                                        <div>
+                                            score: <%= win.looser.score %> : <%= win.winner.score %>
+                                                    <% if(win.overtime) { %>
+                                                        OT
+                                                        <% } %>
+                                        </div>
+                                        <div>
+                                            <%= d %>
+                                        </div>
+                                    </div>
+                                    <% }%>
+                        </div>
+
+                    </div>
+                    <div class="col allLosses">
+                        <h5>Lost to</h5>
+                        <div class="gamePlayed">
+                            <% for(let lost of lostGames) {%>
+                                <% let d=lost.gameDate.toDateString() %>
+                                    <div class="gameData">
+                                        <div>
+                                            <% if(lost.winner.team==lost.homeTeam) {%>
+                                                @
+                                                <% } %>
+                                                    <%= lost.winner.team %>
+                                        </div>
+                                        <div>
+                                            score: <%= lost.winner.score %> : <%= lost.looser.score %>
+                                                    <% if(lost.overtime) { %>
+                                                        OT
+                                                        <% } %>
+                                        </div>
+                                        <div>
+                                            <%= d %>
+                                        </div>
+                                    </div>
+                                    <% }%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <%- include("../partials/footer.ejs") %>

@@ -7,7 +7,7 @@
             </div>
             <div class="team_logos_container">
                 <% for(let team of teams) { %>
-                    <a href="/team/<%= team._id %>">
+                    <a href="/team/<%= team._id %>?team=<%=team.teamName%>">
                         <div class="team_logo">
                             <img src="images/teams/<%=team.teamLogo%>" alt="<%=team.teamName%> logo">
                         </div>

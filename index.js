@@ -33,8 +33,11 @@ app.get("/", async (req, res) => {
 })
 
 app.get("/team/:id", async (req, res) => {
+    const teamQuery = req.query.team;
     const team = await Team.findById(req.params.id);
-    res.render("teams/teamShow", { team })
+    const winnedGames = await Game.find({ "winner.team": teamQuery });
+    const lostGames = await Game.find({ "looser.team": teamQuery });
+    res.render("teams/team", { team, winnedGames, lostGames })
 })
 
 app.get("/games/new", async (req, res) => {
@@ -51,12 +54,12 @@ app.post("/games", async (req, res) => {
     const newGame = req.body;
     const game = await new Game({
         winner: {
-            team: newGame.winner,
-            score: newGame.winnerScore
+            "team": newGame.winner,
+            "score": newGame.winnerScore
         },
         looser: {
-            team: newGame.looser,
-            score: newGame.looserScore
+            "team": newGame.looser,
+            "score": newGame.looserScore
         },
         homeTeam: newGame.teamHome,
         gameDate: newGame.gameDay,

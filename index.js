@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
+const ejsMate = require("ejs-mate");
 
 const app = express();
 
@@ -8,6 +9,7 @@ app.set("views", path.join(__dirname, "/views"));
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.engine("ejs", ejsMate);
 
 mongoose.connect("mongodb://localhost:27017/nbaStats", {
     useNewUrlParser: true,

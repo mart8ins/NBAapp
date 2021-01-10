@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/teams.css">
+    <link rel="stylesheet" href="/css/games.css">
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <title>NBA stats page</title>
+</head>
+
+<body class="d-flex flex-column vh-100">
+    <%- include("../partials/navbar")%>
+        <main
+            class="container">
+            <%- body %>
+        </main>
+        <%- include("../partials/footer")%>
+</body>
+
+</html>

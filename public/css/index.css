@@ -6,6 +6,7 @@
 .team_logos_container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .team_logo {

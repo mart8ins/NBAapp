@@ -29,15 +29,17 @@ const Team = require("./models/team");
 const Game = require("./models/game");
 
 
+app.get("/", (req, res) => {
+    res.render("index")
+})
 
-
-app.get("/", catchAsync(async (req, res) => {
+app.get("/teams", catchAsync(async (req, res) => {
     const teams = await Team.find({});
     if (!teams) throw new AppErrors(404, "There is no teams to show")
-    res.render("index", { teams })
+    res.render("teams/teams", { teams })
 }))
 
-app.get("/team/:id", catchAsync(async (req, res) => {
+app.get("/teams/:id", catchAsync(async (req, res) => {
     const teamQuery = req.query.team;
     const team = await Team.findById(req.params.id);
     if (!team) throw new AppErrors(404, "There is no data about team");

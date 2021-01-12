@@ -5,50 +5,50 @@ module.exports.games = [
             score: 102
         },
         looser: {
-            team: "Knicks",
+            team: "Hawks",
             score: 90
         },
-        homeTeam: "New York Knicks",
+        homeTeam: "Atlanta Hawks",
         gameDate: new Date(),
         overtime: false
     },
     {
         winner: {
-            team: "Celtics",
+            team: "Hawks",
             score: 98
         },
         looser: {
-            team: "Bulls",
+            team: "Celtics",
             score: 85
         },
         homeTeam: "Boston Celtics",
         gameDate: new Date(),
         overtime: false
-    },
-    {
-        winner: {
-            team: "Bulls",
-            score: 122
-        },
-        looser: {
-            team: "Cavaliers",
-            score: 120
-        },
-        homeTeam: "Cleveland Cavaliers",
-        gameDate: new Date(),
-        overtime: true
-    },
-    {
-        winner: {
-            team: "Mavericks",
-            score: 132
-        },
-        looser: {
-            team: "Cavaliers",
-            score: 131
-        },
-        homeTeam: "Cleveland Cavaliers",
-        gameDate: new Date(),
-        overtime: true
     }
+    // {
+    //     winner: {
+    //         team: "Bulls",
+    //         score: 122
+    //     },
+    //     looser: {
+    //         team: "Cavaliers",
+    //         score: 120
+    //     },
+    //     homeTeam: "Cleveland Cavaliers",
+    //     gameDate: new Date(),
+    //     overtime: true
+    // },
+    // {
+    //     winner: {
+    //         team: "Mavericks",
+    //         score: 132
+    //     },
+    //     looser: {
+    //         team: "Cavaliers",
+    //         score: 131
+    //     },
+    //     homeTeam: "Cleveland Cavaliers",
+    //     gameDate: new Date(),
+    //     overtime: true
+    // }
 ]

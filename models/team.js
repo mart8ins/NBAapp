@@ -6,14 +6,43 @@ const teamSchema = new Schema({
     teamName: String,
     teamCity: String,
     teamLogo: String,
-    rooster:
-        [{
-            name: String,
-            position: String,
-            jerseyNumber: Number,
-            about: String
-        }]
-
+    rooster: [
+        {
+            name: {
+                type: String
+            },
+            age: {
+                type: Number
+            },
+            jersey: {
+                type: Number
+            },
+            position: {
+                type: String
+                // enum: ["point guard", "shooting guard", "small forward", "power forward", "center"]
+            },
+            rating: {
+                type: Number
+            },
+            stats: {
+                pts: {
+                    type: Number
+                },
+                reb: {
+                    type: Number
+                },
+                ast: {
+                    type: Number
+                },
+                blk: {
+                    type: Number
+                },
+                stl: {
+                    type: Number
+                }
+            }
+        }
+    ]
 })
 
 

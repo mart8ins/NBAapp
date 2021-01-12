@@ -10,6 +10,81 @@
             </div>
 
             <div class="team_details_stats">
+                <!-- players -->
+                <div class="row">
+                    <div class="col-10 offset-1">
+                        <h4>Team rooster</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Age</th>
+                                    <th scope="col">Position</th>
+                                    <th scope="col">Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(let player of team.rooster){ %>
+                                    <% let i=team.rooster.indexOf(player) %>
+                                        <tr>
+                                            <th scope="row">
+                                                <%= player.jersey %>
+                                            </th>
+                                            <td>
+                                                <%= player.name %>
+                                            </td>
+                                            <td>
+                                                <%= player.age %>
+                                            </td>
+                                            <td>
+                                                <%= player.position %>
+                                            </td>
+                                            <td>
+                                                <%= player.rating %>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#player<%= i %>" aria-expanded="false"
+                                                    aria-controls="player<%= i %>">
+                                                    Stats
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        <div class="collapse" id="player<%= i %>">
+                                            <div class="card card-body">
+                                                <h5 class="card-title">
+                                                    <%= player.name %> <span>season avarages</span>
+                                                </h5>
+                                                <div>
+                                                    <p>Points: <span>
+                                                            <%= player.stats.pts %>
+                                                        </span></p>
+                                                    <p>Rebounds: <span>
+                                                            <%= player.stats.reb %>
+                                                        </span></p>
+                                                    <p>Assists: <span>
+                                                            <%= player.stats.ast %>
+                                                        </span></p>
+                                                    <p>Blocks: <span>
+                                                            <%= player.stats.blk %>
+                                                        </span></p>
+                                                    <p>Steals: <span>
+                                                            <%= player.stats.stl %>
+                                                        </span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <% } %>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- played games -->
                 <div class="played_games row">
                     <div class="col allWins">
                         <h5>Wins over</h5>

@@ -1,0 +1,18 @@
+<%- layout("layout/boilerplate") %>
+
+    <div class="container">
+        <div class="all_teams">
+            <div>
+                <h3>NBA teams</h3>
+            </div>
+            <div class="team_logos_container">
+                <% for(let team of teams) { %>
+                    <a href="/teams/<%= team._id %>?team=<%=team.teamName%>">
+                        <div class="team_logo">
+                            <img src="images/teams/<%=team.teamLogo%>" alt="<%=team.teamName%> logo">
+                        </div>
+                    </a>
+                    <% } %>
+            </div>
+        </div>
+    </div>

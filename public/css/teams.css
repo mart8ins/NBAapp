@@ -42,3 +42,22 @@ color: red;
     display: flex;
     justify-content: space-between;
 }
+
+/*  player stats in team.ejs */
+.player_stats {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.player_stats p {
+    display: inline-block;
+    background-color: rgb(240, 228, 228);
+    padding: 10px;
+}
+
+.player_stats p span {
+    font-weight: bold;
+    background-color: white;
+    padding: 5px;
+    font-size: 18px;
+}

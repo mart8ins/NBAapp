@@ -28,6 +28,9 @@ db.once("open", () => {
 const Team = require("./models/team");
 const Game = require("./models/game");
 
+const { simulateGame } = require("./utils/functions");
+
+
 
 app.get("/", (req, res) => {
     res.render("index")
@@ -48,11 +51,6 @@ app.get("/teams/:id", catchAsync(async (req, res) => {
     res.render("teams/team", { team, winnedGames, lostGames })
 }))
 
-app.get("/games/new", catchAsync(async (req, res) => {
-    const teams = await Team.find({});
-    if (!teams) throw new AppErrors(404, "There is no team data to create new games!");
-    res.render("games/new", { teams });
-}))
 
 app.get("/games", catchAsync(async (req, res) => {
     const games = await Game.find({});
@@ -62,15 +60,16 @@ app.get("/games", catchAsync(async (req, res) => {
 
 app.post("/games", catchAsync(async (req, res) => {
     const newGame = req.body;
-    if (!newGame) throw new AppErrors(404, "Missing data about new game!")
+    if (!newGame) throw new AppErrors(404, "Missing data about new game!");
+    const result = simulateGame(newGame);
     const game = await new Game({
         winner: {
-            "team": newGame.winner,
-            "score": newGame.winnerScore
+            "team": result.winner.team,
+            "score": result.winner.score
         },
         looser: {
-            "team": newGame.looser,
-            "score": newGame.looserScore
+            "team": result.looser.team,
+            "score": result.looser.score
         },
         homeTeam: newGame.teamHome,
         gameDate: newGame.gameDay,
@@ -78,6 +77,18 @@ app.post("/games", catchAsync(async (req, res) => {
     })
     game.save();
     res.redirect("/games");
+}))
+
+// app.get("/games/new", catchAsync(async (req, res) => {
+//     const teams = await Team.find({});
+//     if (!teams) throw new AppErrors(404, "There is no team data to manualy create new games!");
+//     res.render("games/new", { teams });
+// }))
+
+app.get("/games/simulate", catchAsync(async (req, res) => {
+    const teams = await Team.find({});
+    if (!teams) throw new AppErrors(404, "There is no team data to simulate games!");
+    res.render("games/simulate", { teams });
 }))
 
 app.get("/games/:id", catchAsync(async (req, res) => {

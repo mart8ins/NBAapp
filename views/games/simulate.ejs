@@ -7,8 +7,8 @@
                 <div class="form-group">
 
                     <div>
-                        <label for="winner" class="form-label">Winner</label>
-                        <select class="form-select" name="winner" id="winner" required>
+                        <label for="team1" class="form-label">Team 1</label>
+                        <select class="form-select" name="team1" id="team1" required>
                             <option value="">Choose...</option>
                             <% for(let team of teams) { %>
                                 <option value="<%= team.teamName %>">
@@ -21,24 +21,24 @@
                         </div>
                     </div>
 
-                    <div>
+                    <!-- <div>
                         <label for="winnerScore">Score</label>
                         <div>
-                            <input class="form-control" type="number"
+                            <input value="" class="form-control" type="number"
                                 id="winnerScore" name="winnerScore"
                                 required>
                             <div class="invalid-feedback">
                                 Team score is required!
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- loosers team and score -->
                 <div class="form-group">
-                    <label for="looser">Looser</label>
+                    <label for="team2">Team 2</label>
                     <div>
-                        <select class="form-select" name="looser" id="looser" required>
+                        <select class="form-select" name="team2" id="team2" required>
                             <option value="">Choose...</option>
                             <% for(let team of teams) { %>
                                 <option value="<%= team.teamName %>">
@@ -50,10 +50,10 @@
                             Please select team
                         </div>
                     </div>
-                    <div>
+                    <!-- <div>
                         <label for="looserScore">Score</label>
                         <div>
-                            <input class="form-control" type="number"
+                            <input value="" class="form-control" type="number"
                                 id="loosersScore"
                                 name="looserScore"
                                 required>
@@ -61,7 +61,7 @@
                                 Team score is required!
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- home team  -->
@@ -99,7 +99,7 @@
                 </div>
 
                 <button class="btn btn-primary">
-                    Add
+                    Simulate
                 </button>
             </form>
 

@@ -95,7 +95,7 @@ table {
     text-align: center;
 }
 
-/* to add new game/result */
+/* games/simulate */
 .game_form_container form {
     display: flex;
     justify-content: space-evenly;
@@ -103,5 +103,5 @@ table {
 }
 
 .game_form_container form div {
- color: blue;
+ font-weight: bold;
 }

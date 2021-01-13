@@ -27,7 +27,8 @@ db.once("open", () => {
 //         team = new Team({
 //             teamName: `${teams[i].name}`,
 //             teamCity: `${teams[i].city}`,
-//             teamLogo: `${teams[i].logo}`
+//             teamLogo: `${teams[i].logo}`,
+//             rating: `${teams[i].rating}`,
 //         })
 //         for (let j = 0; j < teams[i].rooster.length; j++) {
 //             console.log(teams[i].rooster[j])
@@ -54,7 +55,7 @@ db.once("open", () => {
 
 // }
 
-games
+// games
 const seedDB = async () => {
     await Game.deleteMany({});
     // for (let i = 0; i < games.length; i++) {

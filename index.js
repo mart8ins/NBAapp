@@ -60,7 +60,8 @@ app.get("/games", catchAsync(async (req, res) => {
 
 app.post("/games", catchAsync(async (req, res) => {
     const newGame = req.body;
-    if (!newGame) throw new AppErrors(404, "Missing data about new game!");
+    console.log(newGame, "routā")
+    if (!newGame) throw new AppErrors(404, "Missing data about simulated game!");
     const result = simulateGame(newGame);
     const game = await new Game({
         winner: {
@@ -73,17 +74,11 @@ app.post("/games", catchAsync(async (req, res) => {
         },
         homeTeam: newGame.teamHome,
         gameDate: newGame.gameDay,
-        overtime: newGame.overtime ? newGame.overtime : false,
+        overtime: result.overtime ? result.overtime : false,
     })
     game.save();
     res.redirect("/games");
 }))
-
-// app.get("/games/new", catchAsync(async (req, res) => {
-//     const teams = await Team.find({});
-//     if (!teams) throw new AppErrors(404, "There is no team data to manualy create new games!");
-//     res.render("games/new", { teams });
-// }))
 
 app.get("/games/simulate", catchAsync(async (req, res) => {
     const teams = await Team.find({});

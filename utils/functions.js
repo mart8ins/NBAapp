@@ -1,48 +1,43 @@
-// random score for simulating game
+/*****************************
+random score for simulating game
+*****************************/
 function randomScore(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
+
+/*****************************
+function to simulate game
+*****************************/
 function simulateGame(newGame) {
 
-    // array with teams title and its rating
+    // arrays with teams title and its rating
     let team1 = newGame.team1.split(",");
     let team2 = newGame.team2.split(",");
 
-    // rating range is 1-5, so if teams rating is 4, there will be 4 elements in array with teams name, other teams rating 2 - 2 names in array
-    let ratingList = []
-
-    // team rating to affect final score, but how????
+    // team rating as a number for to affect winner/looser
     let team1Rating = parseInt(team1[1]);
     let team2Rating = parseInt(team2[1]);
 
+    // if teams rating is 4, there will be 4 elements in array with teams name, other teams rating 2 - 2 names in array
+    let ratingList = []
+
+    // loops for teams ratings to fill ratinglist array
     for (let i = 1; i <= team1Rating; i++) {
         ratingList.push(team1[0])
     }
     for (let i = 1; i <= team2Rating; i++) {
         ratingList.push(team2[0])
     }
-    console.log(ratingList)
 
-    /* JĀIZDOMĀ KĀ IEVIEST ŠĪ FUNKCIONALITĀTE NOSAKOT UZVARĒTĀJU AR RATINGA PALĪDZĪBU */
-    // let options = Math.round(Math.random() * ratingList.length);
+    // random number in range 0-... of ratingList length
+    let determine = Math.round(Math.random() * ratingList.length);
 
-
-
-
-
-    /* !!!!! */
-    // options - 0 or 1, refers to two teams
-    let options = Math.round(Math.random() * 1);
-    /* !!!!! */
-
-    // two teams
-    let teams = [team1[0], team2[0]];
-
-
-
-
-
+    let winnerName = ratingList[determine];
+    let looserName;
+    for (let i in ratingList) {
+        if (ratingList[determine] != ratingList[i]) looserName = ratingList[i];
+    }
 
     // two random scores
     let score1 = randomScore(80, 130);
@@ -53,20 +48,13 @@ function simulateGame(newGame) {
     let isOvertime = Math.round(Math.random() * 1);
     let overtime = isOvertime == 1 && Math.abs(score1 - score2) < 10 ? true : false;
 
-    // random winner and looser
-    let win = teams[options];
-    let los;
-    for (let i in teams) {
-        if (teams[options] != teams[i]) los = teams[i]
-    }
-
     return {
         winner: {
-            team: win,
+            team: winnerName,
             score: score1 > score2 ? score1 : score2 > score1 ? score2 : null
         },
         looser: {
-            team: los,
+            team: looserName,
             score: score1 < score2 ? score1 : score2 < score1 ? score2 : null
         },
         overtime: overtime

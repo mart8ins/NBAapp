@@ -6,7 +6,7 @@ module.exports.teams = [
         rating: 2,
         rooster: [
             {
-                name: "Kevin Huerter", age: 19, jersey: 12, position: "shooting guard", rating: 76,
+                name: "Kevin Huerter", age: 19, jersey: 12, position: "shooting guard", rating: 82,
                 stats: {
                     pts: 17.3,
                     reb: 2.1,
@@ -26,7 +26,7 @@ module.exports.teams = [
                 }
             },
             {
-                name: "Trae Yang", age: 21, jersey: 11, position: "point guard", rating: 88,
+                name: "Trae Yang", age: 21, jersey: 11, position: "point guard", rating: 91,
                 stats: {
                     pts: 29.4,
                     reb: 6.7,
@@ -46,7 +46,7 @@ module.exports.teams = [
                 }
             },
             {
-                name: "John Collins", age: 25, jersey: 32, position: "power forward", rating: 83,
+                name: "John Collins", age: 25, jersey: 32, position: "power forward", rating: 75,
                 stats: {
                     pts: 21.1,
                     reb: 8.5,
@@ -64,7 +64,7 @@ module.exports.teams = [
         rating: 4,
         rooster: [
             {
-                name: "Jaylen Brown", age: 24, jersey: 8, position: "shooting guard", rating: 88,
+                name: "Jaylen Brown", age: 24, jersey: 8, position: "shooting guard", rating: 92,
                 stats: {
                     pts: 33.3,
                     reb: 5.1,
@@ -74,7 +74,7 @@ module.exports.teams = [
                 }
             },
             {
-                name: "Javonte Green", age: 28, jersey: 33, position: "center", rating: 67,
+                name: "Javonte Green", age: 28, jersey: 33, position: "center", rating: 74,
                 stats: {
                     pts: 7.3,
                     reb: 9.1,
@@ -94,7 +94,7 @@ module.exports.teams = [
                 }
             },
             {
-                name: "Ennes Kanter", age: 30, jersey: 00, position: "center", rating: 79,
+                name: "Ennes Kanter", age: 30, jersey: 00, position: "center", rating: 85,
                 stats: {
                     pts: 13.8,
                     reb: 7.6,
@@ -104,7 +104,7 @@ module.exports.teams = [
                 }
             },
             {
-                name: "Grant Williams", age: 20, jersey: 43, position: "power forward", rating: 88,
+                name: "Grant Williams", age: 20, jersey: 43, position: "power forward", rating: 76,
                 stats: {
                     pts: 14.9,
                     reb: 3.5,

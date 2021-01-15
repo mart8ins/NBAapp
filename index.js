@@ -28,7 +28,7 @@ db.once("open", () => {
 const Team = require("./models/team");
 const Game = require("./models/game");
 
-const { simulateGame } = require("./utils/functions");
+const { simulateGame, simulateStats } = require("./utils/functions");
 
 
 
@@ -59,14 +59,39 @@ app.get("/games", catchAsync(async (req, res) => {
 }))
 
 app.post("/games", catchAsync(async (req, res) => {
+    // getting game teams names, game date, home court team
     const newGame = req.body;
-    console.log(newGame, "routā")
     if (!newGame) throw new AppErrors(404, "Missing data about simulated game!");
+
+
+    /* *********** 
+    ************** */
+    // depending on teams name, get teams rooster
+    let winnerTeam = await Team.findOne({ teamName: result.winner.team });
+    let winnerRooster = winnerTeam.rooster;
+
+    let looserTeam = await Team.findOne({ teamName: result.looser.team });
+    let looserRooster = looserTeam.rooster;
+
+    // player stats for current team, current game depending on game score
+    const winnersStats = simulateStats(result.winner.score, winnerRooster);
+    const loosersStats = simulateStats(result.looser.score, looserRooster);
+    /* ***********
+    *************** */
+
+    // simulated games result
     const result = simulateGame(newGame);
+
+
+
+    // saving game, before need to get data to save ******************************
     const game = await new Game({
         winner: {
             "team": result.winner.team,
-            "score": result.winner.score
+            "score": result.winner.score,
+            "rooster": [
+                { name: "vards", stats: "stati" }
+            ]
         },
         looser: {
             "team": result.looser.team,
@@ -79,6 +104,7 @@ app.post("/games", catchAsync(async (req, res) => {
     game.save();
     res.redirect("/games");
 }))
+
 
 app.get("/games/simulate", catchAsync(async (req, res) => {
     const teams = await Team.find({});

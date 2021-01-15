@@ -12,7 +12,29 @@ const gameSchema = new Schema({
         score: {
             type: Number,
             required: true
-        }
+        },
+        rooster: [{
+            name: {
+                type: String,
+            },
+            stats: {
+                pts: {
+                    type: Number
+                },
+                reb: {
+                    type: Number
+                },
+                ast: {
+                    type: Number
+                },
+                blk: {
+                    type: Number
+                },
+                stl: {
+                    type: Number
+                }
+            }
+        }]
     },
     looser: {
         team: {
@@ -23,7 +45,29 @@ const gameSchema = new Schema({
         score: {
             type: Number,
             required: true
-        }
+        },
+        rooster: [{
+            name: {
+                type: String,
+            },
+            stats: {
+                pts: {
+                    type: Number
+                },
+                reb: {
+                    type: Number
+                },
+                ast: {
+                    type: Number
+                },
+                blk: {
+                    type: Number
+                },
+                stl: {
+                    type: Number
+                }
+            }
+        }]
     },
     homeTeam: {
         type: String,

@@ -3,7 +3,6 @@ module.exports.teams = [
         name: "Hawks",
         city: "Atlanta",
         logo: "hawks.png",
-        rating: 2,
         rooster: [
             {
                 name: "Kevin Huerter", age: 19, jersey: 12, position: "shooting guard", rating: 82,
@@ -61,7 +60,6 @@ module.exports.teams = [
         name: "Celtics",
         city: "Boston",
         logo: "celtics.png",
-        rating: 4,
         rooster: [
             {
                 name: "Jaylen Brown", age: 24, jersey: 8, position: "shooting guard", rating: 92,

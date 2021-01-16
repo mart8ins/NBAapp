@@ -59,29 +59,28 @@ app.get("/games", catchAsync(async (req, res) => {
 }))
 
 app.post("/games", catchAsync(async (req, res) => {
-    // getting game teams names, game date, home court team
+    // getting game teams names, game date, home court team , gameDay
     const newGame = req.body;
     if (!newGame) throw new AppErrors(404, "Missing data about simulated game!");
 
 
-    /* *********** 
-    ************** */
-    // depending on teams name, get teams rooster
-    let winnerTeam = await Team.findOne({ teamName: result.winner.team });
-    let winnerRooster = winnerTeam.rooster;
+    // team data
+    let team1 = await Team.findOne({ teamName: newGame.team1 });
+    let team2 = await Team.findOne({ teamName: newGame.team2 });
 
-    let looserTeam = await Team.findOne({ teamName: result.looser.team });
-    let looserRooster = looserTeam.rooster;
 
-    // player stats for current team, current game depending on game score
-    const winnersStats = simulateStats(result.winner.score, winnerRooster);
-    const loosersStats = simulateStats(result.looser.score, looserRooster);
-    /* ***********
-    *************** */
+    // // simulate stats for both teams, objects with teams name, and player game stats array
+    let gameStatsTeam1 = {
+        team: team1.teamName,
+        playerStats: simulateStats(team1.rooster)
+    }
+    let gameStatsTeam2 = {
+        team: team2.teamName,
+        playerStats: simulateStats(team2.rooster)
+    }
 
-    // simulated games result
-    const result = simulateGame(newGame);
-
+    // using both team game stats calculate winning team.
+    const result = simulateGame(gameStatsTeam1, gameStatsTeam2, newGame.gameDay);
 
 
     // saving game, before need to get data to save ******************************
@@ -97,12 +96,29 @@ app.post("/games", catchAsync(async (req, res) => {
             "team": result.looser.team,
             "score": result.looser.score
         },
-        homeTeam: newGame.teamHome,
-        gameDate: newGame.gameDay,
-        overtime: result.overtime ? result.overtime : false,
+        homeTeam: result.homeTeam,
+        gameDate: result.gameDate, /// nav veel 
+        overtime: result.overtime
     })
     game.save();
     res.redirect("/games");
+
+    // {
+    //     winner: {
+    //       team: 'Hawks',
+    //       score: 96,
+    //       stats: [ [Object], [Object], [Object], [Object], [Object] ]
+    //     },
+    //     looser: {
+    //       team: 'Celtics',
+    //       score: 93,
+    //       stats: [ [Object], [Object], [Object], [Object], [Object] ]
+    //     },
+    //     overtime: true,
+    //     homeTeam: 'Something'
+    // gameDate: gameDate;
+    //   }
+
 }))
 
 

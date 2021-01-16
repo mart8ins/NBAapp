@@ -6,7 +6,6 @@ const teamSchema = new Schema({
     teamName: String,
     teamCity: String,
     teamLogo: String,
-    rating: Number,
     rooster: [
         {
             name: {

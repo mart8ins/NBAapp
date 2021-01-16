@@ -82,42 +82,25 @@ app.post("/games", catchAsync(async (req, res) => {
     // using both team game stats calculate winning team.
     const result = simulateGame(gameStatsTeam1, gameStatsTeam2, newGame.gameDay);
 
-
+    console.log(result)
     // saving game, before need to get data to save ******************************
     const game = await new Game({
         winner: {
             "team": result.winner.team,
             "score": result.winner.score,
-            "rooster": [
-                { name: "vards", stats: "stati" }
-            ]
+            "rooster": result.winner.stats
         },
         looser: {
             "team": result.looser.team,
-            "score": result.looser.score
+            "score": result.looser.score,
+            "rooster": result.looser.stats
         },
         homeTeam: result.homeTeam,
-        gameDate: result.gameDate, /// nav veel 
+        gameDate: result.gameDate,
         overtime: result.overtime
     })
     game.save();
     res.redirect("/games");
-
-    // {
-    //     winner: {
-    //       team: 'Hawks',
-    //       score: 96,
-    //       stats: [ [Object], [Object], [Object], [Object], [Object] ]
-    //     },
-    //     looser: {
-    //       team: 'Celtics',
-    //       score: 93,
-    //       stats: [ [Object], [Object], [Object], [Object], [Object] ]
-    //     },
-    //     overtime: true,
-    //     homeTeam: 'Something'
-    // gameDate: gameDate;
-    //   }
 
 }))
 
@@ -132,6 +115,7 @@ app.get("/games/:id", catchAsync(async (req, res) => {
     const { id } = req.params;
     const game = await Game.findById(id);
     if (!game) throw new AppErrors(404, "There is no data about this game");
+    console.log(game.winner.rooster)
     res.render("games/gameDetails", { game });
 }))
 

@@ -71,10 +71,13 @@ function simulateGame(gameStatsTeam1, gameStatsTeam2, gameDay) {
         totalScoreTeam2 += player.stats.pts;
     }))
 
+    // deside home team
+    let desideHomeTeam = Math.floor(Math.random() * 2);
+
     // logic for simulating possible overtime for game
     function isOvertime(totalScoreTeam1, totalScoreTeam2) {
         let isOvertime = false;
-        let randomForDetermineOvertime = Math.floor(Math.random() * 2); // 0 - 3 for random possibility
+        let randomForDetermineOvertime = Math.floor(Math.random() * 2); // 0 - 1 for random possibility
         console.log(randomForDetermineOvertime)
         let scoreDiff = 12;
         let diff;
@@ -106,7 +109,7 @@ function simulateGame(gameStatsTeam1, gameStatsTeam2, gameDay) {
             stats: totalScoreTeam1 < totalScoreTeam2 ? team1.playerStats : team2.playerStats
         },
         overtime: isOvertime(totalScoreTeam1, totalScoreTeam2),
-        homeTeam: "Something",
+        homeTeam: desideHomeTeam == 0 ? team1.team : team2.team,
         gameDate: gameDay
     }
 
@@ -136,26 +139,6 @@ function simulateStats(teamRooster) {
     return statsArr;
 }
 
-
-
-// {
-//     team: 'Celtics',
-//     playerStats: [
-//       {
-//         name: 'Jaylen Brown',
-//         position: 'shooting guard',
-//         stats: [Object]
-//       },
-//       { name: 'Javonte Green', position: 'center', stats: [Object] },
-//       { name: 'Jayson Tatum', position: 'point guard', stats: [Object] },
-//       { name: 'Ennes Kanter', position: 'center', stats: [Object] },
-//       {
-//         name: 'Grant Williams',
-//         position: 'power forward',
-//         stats: [Object]
-//       }
-//     ]
-//   }
 
 
 module.exports = { randomScore, simulateGame, simulateStats }

@@ -4,7 +4,10 @@
         <div class="game_details_container">
             <div class="game_details_head">
                 <div class="detailsTeam">
-                    <%= game.winner.team %>
+                    <% if(game.homeTeam==game.winner.team) {%>
+                        @
+                        <% } %>
+                            <%= game.winner.team %>
                 </div>
                 <div class="detailsScore">
                     <%= game.winner.score %>
@@ -19,19 +22,152 @@
                     <%= game.looser.score %>
                 </div>
                 <div class="detailsTeam">
-                    <%= game.looser.team %>
+                    <% if(game.homeTeam==game.looser.team) {%>
+                        @
+                        <% } %>
+                            <%= game.looser.team %>
                 </div>
             </div>
 
             <div class="game_details_data">
-                <table>
-                    <tr>
-                        <th>Home team</th>
-                        <td>
-                            <%= game.homeTeam %>
-                        </td>
-                    </tr>
-                </table>
+                <div class="row team_roosters_stats_container">
+                    <!-- winner -->
+                    <div class="col-6 winner_stats">
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>Points</th>
+                                <th>Rebounds</th>
+                                <th>Assists</th>
+                                <th>Steals</th>
+                                <th>Blocks</th>
+                            </tr>
+                            <% for(let player of game.winner.rooster) {%>
+                                <tr>
+                                    <td>
+                                        <%= player.name %>
+                                    </td>
+                                    <td>
+                                        <%= player.stats.pts %>
+                                    </td>
+                                    <td>
+                                        <%= player.stats.reb %>
+                                    </td>
+                                    <td>
+                                        <%= player.stats.ast %>
+                                    </td>
+                                    <td>
+                                        <%= player.stats.stl %>
+                                    </td>
+                                    <td>
+                                        <%= player.stats.blk %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                                    <% let totalPtsW=0; %>
+                                        <% let totalRebW=0; %>
+                                            <% let totalAstW=0; %>
+                                                <% let totalStlW=0; %>
+                                                    <% let totalBlkW=0; %>
+                                                        <% for(let player of game.winner.rooster) {%>
+                                                            <% totalPtsW +=player.stats.pts %>
+                                                                <% totalRebW +=player.stats.reb %>
+                                                                    <% totalAstW +=player.stats.ast %>
+                                                                        <% totalStlW +=player.stats.stl %>
+                                                                            <% totalBlkW +=player.stats.blk %>
+                                                                                <% } %>
+                                                                                    <tr>
+                                                                                        <th>
+                                                                                            Totals
+                                                                                        </th>
+                                                                                        <th>
+                                                                                            <%= totalPtsW %>
+                                                                                        </th>
+                                                                                        <th>
+                                                                                            <%= totalRebW %>
+                                                                                        </th>
+                                                                                        <th>
+                                                                                            <%= totalAstW %>
+                                                                                        </th>
+                                                                                        <th>
+                                                                                            <%= totalStlW %>
+                                                                                        </th>
+                                                                                        <th>
+                                                                                            <%= totalBlkW %>
+                                                                                        </th>
+                                                                                    </tr>
+
+                        </table>
+                    </div>
+                    <!-- looser -->
+                    <div class="col-6 looser_stats">
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>Points</th>
+                                <th>Rebounds</th>
+                                <th>Assists</th>
+                                <th>Steals</th>
+                                <th>Blocks</th>
+                            </tr>
+
+                            <% for(let player of game.looser.rooster) {%>
+                                <tr>
+                                    <td>
+                                        <%= player.name %>
+                                    </td>
+                                    <td>
+                                        <%= player.stats.pts %>
+                                    </td>
+                                    <td>
+                                        <%= player.stats.reb %>
+                                    </td>
+                                    <td>
+                                        <%= player.stats.ast %>
+                                    </td>
+                                    <td>
+                                        <%= player.stats.stl %>
+                                    </td>
+                                    <td>
+                                        <%= player.stats.blk %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                                    <% let totalPtsL=0; %>
+                                        <% let totalRebL=0; %>
+                                            <% let totalAstL=0; %>
+                                                <% let totalStlL=0; %>
+                                                    <% let totalBlkL=0; %>
+                                                        <% for(let player of game.looser.rooster) {%>
+                                                            <% totalPtsL +=player.stats.pts %>
+                                                                <% totalRebL +=player.stats.reb %>
+                                                                    <% totalAstL +=player.stats.ast %>
+                                                                        <% totalStlL +=player.stats.stl %>
+                                                                            <% totalBlkL +=player.stats.blk %>
+                                                                                <% } %>
+                                                                                    <tr>
+                                                                                        <th>
+                                                                                            Totals
+                                                                                        </th>
+                                                                                        <th>
+                                                                                            <%= totalPtsL %>
+                                                                                        </th>
+                                                                                        <th>
+                                                                                            <%= totalRebL %>
+                                                                                        </th>
+                                                                                        <th>
+                                                                                            <%= totalAstL %>
+                                                                                        </th>
+                                                                                        <th>
+                                                                                            <%= totalStlL %>
+                                                                                        </th>
+                                                                                        <th>
+                                                                                            <%= totalBlkL %>
+                                                                                        </th>
+                                                                                    </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -90,10 +90,21 @@ a {
 }
 
 table {
-    width: 65%;
+    width: 100%;
     margin: 10px auto;
     text-align: center;
 }
+
+.winner_stats, .looser_stats {
+    background-color: rgba(128, 128, 128, 0.281);
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.looser_stats {
+border-left: 5px solid black;
+}
+
 
 /* games/simulate */
 .game_form_container form {

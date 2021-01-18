@@ -1,3 +1,13 @@
+const mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost:27017/nbaStats", {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+})
+const Team = require("../models/team");
+const Game = require("../models/game");
+
+
 /*****************************
 random score for simulating game
 *****************************/
@@ -14,13 +24,9 @@ function randomStats(position, stat, playerRating) {
 
     if (stat == "pts") {
         if (playerRating >= 90) return randomScore(10, rating90_100);
-
         if (playerRating >= 80 && playerRating < 90) return randomScore(10, rating80_90);
-
         if (playerRating >= 70 && playerRating < 80) return randomScore(10, rating70_80);
-
         if (playerRating < 70) return randomScore(6, rating70);
-
     } else {
         if (position == "shooting guard" && stat == "reb") return randomScore(0, 5);
         if (position == "shooting guard" && stat == "ast") return randomScore(0, 7);
@@ -49,6 +55,27 @@ function randomStats(position, stat, playerRating) {
     }
 }
 
+// logic for simulating possible overtime for game
+function isOvertime(totalScoreTeam1, totalScoreTeam2) {
+    let isOvertime = false;
+    let randomForDetermineOvertime = Math.floor(Math.random() * 2); // 0 - 1 for random possibility
+    let scoreDiff = 12;
+    let diff;
+
+    if (totalScoreTeam1 > totalScoreTeam2) {
+        diff = totalScoreTeam1 - totalScoreTeam2;
+        if ((diff < scoreDiff) && randomForDetermineOvertime == 0) {
+            isOvertime = true;
+        }
+    } else if (totalScoreTeam1 < totalScoreTeam2) {
+        diff = totalScoreTeam2 - totalScoreTeam1;
+        if ((diff < scoreDiff) && randomForDetermineOvertime == 0) {
+            isOvertime = true;
+        }
+    }
+    return isOvertime;
+}
+
 
 /*****************************
 function to simulate game
@@ -74,29 +101,6 @@ function simulateGame(gameStatsTeam1, gameStatsTeam2, gameDay) {
     // deside home team
     let desideHomeTeam = Math.floor(Math.random() * 2);
 
-    // logic for simulating possible overtime for game
-    function isOvertime(totalScoreTeam1, totalScoreTeam2) {
-        let isOvertime = false;
-        let randomForDetermineOvertime = Math.floor(Math.random() * 2); // 0 - 1 for random possibility
-        console.log(randomForDetermineOvertime)
-        let scoreDiff = 12;
-        let diff;
-
-        if (totalScoreTeam1 > totalScoreTeam2) {
-            diff = totalScoreTeam1 - totalScoreTeam2;
-            if ((diff < scoreDiff) && randomForDetermineOvertime == 0) {
-                isOvertime = true;
-            }
-        } else if (totalScoreTeam1 < totalScoreTeam2) {
-            diff = totalScoreTeam2 - totalScoreTeam1;
-            if ((diff < scoreDiff) && randomForDetermineOvertime == 0) {
-                isOvertime = true;
-            }
-        }
-        return isOvertime;
-    }
-
-
     return {
         winner: {
             team: totalScoreTeam1 > totalScoreTeam2 ? team1.team : team2.team,
@@ -112,19 +116,15 @@ function simulateGame(gameStatsTeam1, gameStatsTeam2, gameDay) {
         homeTeam: desideHomeTeam == 0 ? team1.team : team2.team,
         gameDate: gameDay
     }
-
 }
 
 function simulateStats(teamRooster) {
-
     let rooster = teamRooster; // array ar objektiem
     let statsArr = [];
 
+    // simulate stats for each player
     rooster.forEach((player) => {
-        // initialy is teams score, which decreases when looping throug rooster, at the end should be zero
-
-        // looping through teams rooster and creating players stats object what is pushed in array -  statsArr
-        statsArr.push({
+        let objStats = {
             name: player.name,
             position: player.position,
             stats: {
@@ -134,11 +134,26 @@ function simulateStats(teamRooster) {
                 blk: randomStats(player.position, "blk"),
                 stl: randomStats(player.position, "stl")
             }
-        })
+        }
+        // looping through teams rooster and creating players stats object what is pushed in array -  statsArr
+        statsArr.push(objStats)
     })
     return statsArr;
 }
 
+async function updatePlayerCareerAvarages(gameStats) {
+    const team = gameStats.team;
+
+    // array with player stats after new simulated game
+    const playerStats = gameStats.playerStats;
+    console.log(playerStats)
+
+    const teamToUpdate = await Team.findOne({ teamName: team });
+    const teamToUpdateRooster = teamToUpdate.rooster;
 
 
-module.exports = { randomScore, simulateGame, simulateStats }
+}
+
+
+
+module.exports = { randomScore, simulateGame, simulateStats, updatePlayerCareerAvarages }

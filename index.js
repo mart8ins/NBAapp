@@ -27,8 +27,9 @@ db.once("open", () => {
 
 const Team = require("./models/team");
 const Game = require("./models/game");
+const Player = require("./models/player");
 
-const { simulateGame, simulateStats } = require("./utils/functions");
+const { simulateGame, simulateStats, updatePlayerCareerAvarages } = require("./utils/functions");
 
 
 
@@ -44,10 +45,17 @@ app.get("/teams", catchAsync(async (req, res) => {
 
 app.get("/teams/:id", catchAsync(async (req, res) => {
     const teamQuery = req.query.team;
-    const team = await Team.findById(req.params.id);
+    const team = await Team.findById(req.params.id).populate("rooster");
+    console.log(team)
+    /*
+    Sanāca populācija!!!
+    */
+
+
     if (!team) throw new AppErrors(404, "There is no data about team");
     const winnedGames = await Game.find({ "winner.team": teamQuery });
     const lostGames = await Game.find({ "looser.team": teamQuery });
+
     res.render("teams/team", { team, winnedGames, lostGames })
 }))
 
@@ -65,8 +73,8 @@ app.post("/games", catchAsync(async (req, res) => {
 
 
     // team data
-    let team1 = await Team.findOne({ teamName: newGame.team1 });
-    let team2 = await Team.findOne({ teamName: newGame.team2 });
+    let team1 = await Team.findOne({ teamName: newGame.team1 }).populate("rooster");
+    let team2 = await Team.findOne({ teamName: newGame.team2 }).populate("rooster");
 
 
     // // simulate stats for both teams, objects with teams name, and player game stats array
@@ -82,7 +90,6 @@ app.post("/games", catchAsync(async (req, res) => {
     // using both team game stats calculate winning team.
     const result = simulateGame(gameStatsTeam1, gameStatsTeam2, newGame.gameDay);
 
-    console.log(result)
     // saving game, before need to get data to save ******************************
     const game = await new Game({
         winner: {
@@ -115,7 +122,6 @@ app.get("/games/:id", catchAsync(async (req, res) => {
     const { id } = req.params;
     const game = await Game.findById(id);
     if (!game) throw new AppErrors(404, "There is no data about this game");
-    console.log(game.winner.rooster)
     res.render("games/gameDetails", { game });
 }))
 

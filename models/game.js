@@ -12,7 +12,8 @@ const gameSchema = new Schema({
         score: {
             type: Number,
             required: true
-        },
+        }
+        ,
         rooster: [{
             name: {
                 type: String,
@@ -45,7 +46,8 @@ const gameSchema = new Schema({
         score: {
             type: Number,
             required: true
-        },
+        }
+        ,
         rooster: [{
             name: {
                 type: String,

@@ -29,7 +29,7 @@ const Team = require("./models/team");
 const Game = require("./models/game");
 const Player = require("./models/player");
 
-const { simulateGame, simulateStats, updatePlayerCareerAvarages } = require("./utils/functions");
+const { simulateGame, simulateStats, playerCareerAvarages } = require("./utils/functions");
 
 
 
@@ -46,15 +46,23 @@ app.get("/teams", catchAsync(async (req, res) => {
 app.get("/teams/:id", catchAsync(async (req, res) => {
     const teamQuery = req.query.team;
     const team = await Team.findById(req.params.id).populate("rooster");
-    console.log(team)
-    /*
-    Sanāca populācija!!!
-    */
-
-
     if (!team) throw new AppErrors(404, "There is no data about team");
-    const winnedGames = await Game.find({ "winner.team": teamQuery });
-    const lostGames = await Game.find({ "looser.team": teamQuery });
+
+    // find all existing games where current team lost or won
+    const winnedGames = await Game.find({ "winner.team": teamQuery }); // array with all winned games objects
+    const lostGames = await Game.find({ "looser.team": teamQuery }); // array with all lost games objects
+
+
+    /*
+    update player career avarage stats !!!!!!!!! need to change, not in a right route
+    update in database happens only when goes in this route, and not when game is played
+    */
+    playerCareerAvarages(winnedGames, lostGames, teamQuery); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    /* !!!!!!!!!!!!!!!!! *****************!!!!!!!!!!!!!!!!!!!!!!  */
+
+
+
+    if (!winnedGames || !lostGames) throw new AppErrors(404, "There is missing data for games");
 
     res.render("teams/team", { team, winnedGames, lostGames })
 }))
@@ -71,7 +79,6 @@ app.post("/games", catchAsync(async (req, res) => {
     const newGame = req.body;
     if (!newGame) throw new AppErrors(404, "Missing data about simulated game!");
 
-
     // team data
     let team1 = await Team.findOne({ teamName: newGame.team1 }).populate("rooster");
     let team2 = await Team.findOne({ teamName: newGame.team2 }).populate("rooster");
@@ -87,20 +94,24 @@ app.post("/games", catchAsync(async (req, res) => {
         playerStats: simulateStats(team2.rooster)
     }
 
+
     // using both team game stats calculate winning team.
     const result = simulateGame(gameStatsTeam1, gameStatsTeam2, newGame.gameDay);
+
 
     // saving game, before need to get data to save ******************************
     const game = await new Game({
         winner: {
-            "team": result.winner.team,
-            "score": result.winner.score,
-            "rooster": result.winner.stats
+            team: result.winner.team,
+            score: result.winner.score
+            ,
+            rooster: result.winner.stats
         },
         looser: {
-            "team": result.looser.team,
-            "score": result.looser.score,
-            "rooster": result.looser.stats
+            team: result.looser.team,
+            score: result.looser.score
+            ,
+            rooster: result.looser.stats
         },
         homeTeam: result.homeTeam,
         gameDate: result.gameDate,
@@ -108,7 +119,6 @@ app.post("/games", catchAsync(async (req, res) => {
     })
     game.save();
     res.redirect("/games");
-
 }))
 
 

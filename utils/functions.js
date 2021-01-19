@@ -4,8 +4,8 @@ mongoose.connect("mongodb://localhost:27017/nbaStats", {
     useCreateIndex: true,
     useUnifiedTopology: true
 })
-const Team = require("../models/team");
-const Game = require("../models/game");
+
+const Player = require("../models/player");
 
 
 /*****************************
@@ -141,19 +141,76 @@ function simulateStats(teamRooster) {
     return statsArr;
 }
 
-async function updatePlayerCareerAvarages(gameStats) {
-    const team = gameStats.team;
+// accepts to arrays with objects
+function playerCareerAvarages(wins, loses, teamName) {
+    let team = teamName;
+    let winnedGames = wins;
+    let lostGames = loses;
 
-    // array with player stats after new simulated game
-    const playerStats = gameStats.playerStats;
-    console.log(playerStats)
+    let allGamesForNeededTeam = []; // all games for needed team, nested arrays in array. nested array is with 5 objects (players)
+    let playerNames = []; // all unique player name in allGamesForNeededTeam games
+    let stats = []; // all objects with player stats from all games, array with objects, array full of objects, populated from allGamesForNeededTeam
 
-    const teamToUpdate = await Team.findOne({ teamName: team });
-    const teamToUpdateRooster = teamToUpdate.rooster;
+    // for needed team, into allGamesForNeededTeam pushes arrays with objects from every game
+    winnedGames.forEach((game) => {
+        if (game.winner.team == team) {
+            allGamesForNeededTeam.push(game.winner.rooster)
+        }
+    })
+    lostGames.forEach((game) => {
+        if (game.looser.team == team) {
+            allGamesForNeededTeam.push(game.looser.rooster)
+        }
+    })
 
+    // filtering unique player name from all games avaliable, looses and wins, also populate allGamesForNeededTeam into stats array
+    allGamesForNeededTeam.forEach((game) => { // game ir arrays ar 5 speletaju objektiem
+        let gameData = game;
+        gameData.forEach((g) => { // g ir objekts ar spēlētāja vārdu, statiem utt
+            stats.push(g);
+            if (playerNames.indexOf(g.name) == -1) {
+                playerNames.push(g.name);
+            }
+        })
+    })
 
+    // loping through player name array and inside loop through all games array and creating new object with data
+    for (let playerName of playerNames) {
+        let playerUpdate = {
+            gameCount: 0,
+            stats: {
+                pts: 0,
+                reb: 0,
+                ast: 0,
+                blk: 0,
+                stl: 0
+            },
+            name: "",
+        }
+        for (let game of stats) {
+            if (playerName == game.name) {
+                playerUpdate.gameCount++;
+                playerUpdate.name = game.name;
+                playerUpdate.stats.pts += game.stats.pts;
+                playerUpdate.stats.reb += game.stats.reb;
+                playerUpdate.stats.ast += game.stats.ast;
+                playerUpdate.stats.blk += game.stats.blk;
+                playerUpdate.stats.stl += game.stats.stl;
+            }
+        }
+
+        // update players avarage stats in database
+        Player.findOneAndUpdate({ name: playerName }, {
+            stats: {
+                pts: playerUpdate.stats.pts / playerUpdate.gameCount,
+                reb: playerUpdate.stats.reb / playerUpdate.gameCount,
+                ast: playerUpdate.stats.ast / playerUpdate.gameCount,
+                blk: playerUpdate.stats.blk / playerUpdate.gameCount,
+                stl: playerUpdate.stats.stl / playerUpdate.gameCount
+            }
+        });
+    }
 }
 
 
-
-module.exports = { randomScore, simulateGame, simulateStats, updatePlayerCareerAvarages }
+module.exports = { randomScore, simulateGame, simulateStats, playerCareerAvarages }

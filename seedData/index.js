@@ -39,7 +39,8 @@ db.once("open", () => {
 //                 blk: players[i].stats.blk,
 //                 stl: players[i].stats.stl
 //             },
-//             currentTeam: players[i].currentTeam,
+//             currentTeam: players[i].currentTeam
+//             ,
 //             team: await Team.findOne({ teamName: players[i].currentTeam })
 //         })
 //         await playerData.save();

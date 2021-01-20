@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+mongoose.set('useFindAndModify', false);
 mongoose.connect("mongodb://localhost:27017/nbaStats", {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -142,7 +143,8 @@ function simulateStats(teamRooster) {
 }
 
 // accepts to arrays with objects
-function playerCareerAvarages(wins, loses, teamName) {
+async function playerCareerAvarages(wins, loses, teamName) {
+
     let team = teamName;
     let winnedGames = wins;
     let lostGames = loses;
@@ -151,17 +153,22 @@ function playerCareerAvarages(wins, loses, teamName) {
     let playerNames = []; // all unique player name in allGamesForNeededTeam games
     let stats = []; // all objects with player stats from all games, array with objects, array full of objects, populated from allGamesForNeededTeam
 
+
     // for needed team, into allGamesForNeededTeam pushes arrays with objects from every game
-    winnedGames.forEach((game) => {
-        if (game.winner.team == team) {
-            allGamesForNeededTeam.push(game.winner.rooster)
-        }
-    })
-    lostGames.forEach((game) => {
-        if (game.looser.team == team) {
-            allGamesForNeededTeam.push(game.looser.rooster)
-        }
-    })
+    if (winnedGames.length > 0) {
+        winnedGames.forEach((game) => {
+            if (game.winner.team == team) {
+                allGamesForNeededTeam.push(game.winner.rooster)
+            }
+        })
+    }
+    if (lostGames.length > 0) {
+        lostGames.forEach((game) => {
+            if (game.looser.team == team) {
+                allGamesForNeededTeam.push(game.looser.rooster)
+            }
+        })
+    }
 
     // filtering unique player name from all games avaliable, looses and wins, also populate allGamesForNeededTeam into stats array
     allGamesForNeededTeam.forEach((game) => { // game ir arrays ar 5 speletaju objektiem
@@ -198,9 +205,8 @@ function playerCareerAvarages(wins, loses, teamName) {
                 playerUpdate.stats.stl += game.stats.stl;
             }
         }
-
         // update players avarage stats in database
-        Player.findOneAndUpdate({ name: playerName }, {
+        await Player.findOneAndUpdate({ name: playerName }, {
             stats: {
                 pts: playerUpdate.stats.pts / playerUpdate.gameCount,
                 reb: playerUpdate.stats.reb / playerUpdate.gameCount,

@@ -52,18 +52,7 @@ app.get("/teams/:id", catchAsync(async (req, res) => {
     const winnedGames = await Game.find({ "winner.team": teamQuery }); // array with all winned games objects
     const lostGames = await Game.find({ "looser.team": teamQuery }); // array with all lost games objects
 
-
-    /*
-    update player career avarage stats !!!!!!!!! need to change, not in a right route
-    update in database happens only when goes in this route, and not when game is played
-    */
-    playerCareerAvarages(winnedGames, lostGames, teamQuery); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    /* !!!!!!!!!!!!!!!!! *****************!!!!!!!!!!!!!!!!!!!!!!  */
-
-
-
     if (!winnedGames || !lostGames) throw new AppErrors(404, "There is missing data for games");
-
     res.render("teams/team", { team, winnedGames, lostGames })
 }))
 
@@ -83,7 +72,6 @@ app.post("/games", catchAsync(async (req, res) => {
     let team1 = await Team.findOne({ teamName: newGame.team1 }).populate("rooster");
     let team2 = await Team.findOne({ teamName: newGame.team2 }).populate("rooster");
 
-
     // // simulate stats for both teams, objects with teams name, and player game stats array
     let gameStatsTeam1 = {
         team: team1.teamName,
@@ -94,10 +82,8 @@ app.post("/games", catchAsync(async (req, res) => {
         playerStats: simulateStats(team2.rooster)
     }
 
-
     // using both team game stats calculate winning team.
     const result = simulateGame(gameStatsTeam1, gameStatsTeam2, newGame.gameDay);
-
 
     // saving game, before need to get data to save ******************************
     const game = await new Game({
@@ -117,7 +103,24 @@ app.post("/games", catchAsync(async (req, res) => {
         gameDate: result.gameDate,
         overtime: result.overtime
     })
-    game.save();
+    await game.save();
+
+    // find all existing games where current team lost or won
+    const winnedGamesTeam1 = await Game.find({ "winner.team": team1.teamName }); // array with all winned games objects
+    const lostGamesTeam1 = await Game.find({ "looser.team": team1.teamName }); // array with all lost games objects
+
+    const winnedGamesTeam2 = await Game.find({ "winner.team": team2.teamName }); // array with all winned games objects
+    const lostGamesTeam2 = await Game.find({ "looser.team": team2.teamName }); // array with all lost games objects
+
+    /*
+    update player career avarage stats !!!!!!!!! need to change, not in a right route
+    update in database happens only when goes in this route, and not when game is played
+    */
+    playerCareerAvarages(winnedGamesTeam1, lostGamesTeam1, team1.teamName);
+    playerCareerAvarages(winnedGamesTeam2, lostGamesTeam2, team2.teamName); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    /* !!!!!!!!!!!!!!!!! *****************!!!!!!!!!!!!!!!!!!!!!!  */
+
+
     res.redirect("/games");
 }))
 

@@ -1,0 +1,35 @@
+<%- layout("layout/boilerplate") %>
+
+    <div class="container">
+
+        <div style="width: 30%; margin: 120px auto;">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <%= error %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form action="/register" method="post" class="validated-form" novalidate>
+                <div class="mb-3">
+                    <label class="form-label" for="username">Username</label>
+                    <input class="form-control" type="text" id="username" name="username" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-control" type="password" id="password" name="password" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-control" type="email" id="email" name="email" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <button class="btn btn-secondary">Register</button>
+            </form>
+        </div>
+    </div>

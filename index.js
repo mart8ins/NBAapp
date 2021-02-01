@@ -1,6 +1,11 @@
 // express
 const express = require("express");
 const app = express();
+const session = require("express-session");
+
+// utilities
+const AppErrors = require("./utils/AppErrors");
+const flash = require("connect-flash");
 
 // express/app setup
 const path = require("path");
@@ -10,6 +15,9 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.engine("ejs", ejsMate);
+app.use(flash());
+app.use(session({ secret: "badsecret" }));
+
 
 // mongo db
 const mongoose = require("mongoose");
@@ -24,14 +32,23 @@ db.once("open", () => {
     console.log("Connection to database successful!");
 });
 
-// utilities
-const AppErrors = require("./utils/AppErrors");
+// flash msg middleware
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.userLoggedIn = req.session.user_id;
+    next();
+})
+
+
 
 
 // routers
 const teamRouter = require("./router/team");
 const gameRouter = require("./router/game");
+const userRouter = require("./router/user");
 
+app.use("/", userRouter);
 app.use("/teams", teamRouter);
 app.use("/games", gameRouter);
 

@@ -8,49 +8,21 @@
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/teams.css">
     <link rel="stylesheet" href="/css/games.css">
-
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
     <title>NBA stats page</title>
 </head>
 
 <body class="d-flex flex-column vh-100">
     <%- include("../partials/navbar")%>
         <main
-            class="container">
+            class="container" style="margin-top: 110px;">
             <%- body %>
         </main>
         <%- include("../partials/footer")%>
 
-            <script>
-                (function () {
-                    'use strict'
 
-                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                    var forms = document.querySelectorAll('.needs-validation')
-
-                    // Loop over them and prevent submission
-                    Array.prototype.slice.call(forms)
-                        .forEach(function (form) {
-                            form.addEventListener('submit', function (event) {
-                                if (!form.checkValidity()) {
-                                    event.preventDefault()
-                                    event.stopPropagation()
-                                }
-
-                                form.classList.add('was-validated')
-                            }, false)
-                        })
-                })()
-                    (function () {
-                        var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
-                        var collapseList = collapseElementList.map(function (collapseEl) {
-                            return new bootstrap.Collapse(collapseEl)
-                        })
-                    })
-
-
-            </script>
+            <script src="/js/jquery.min.js"></script>
+            <script src="/js/bootstrap.min.js"></script>
+            <script src="/js/scripts.js"></script>
 </body>
 
 </html>

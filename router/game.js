@@ -3,12 +3,13 @@ const router = express.Router();
 
 const catchAsync = require("../utils/catchAsync");
 const AppErrors = require("../utils/AppErrors");
+const { isLogged } = require("../utils/middleware/auth"); // middleware to check if user is logged in, if not then protect the route
 
 const Team = require("../models/team");
 const Game = require("../models/game");
 
 const { simulateGame, simulateStats, playerCareerAvarages } = require("../utils/functions");
-
+router.use(isLogged);
 
 router.get("/", catchAsync(async (req, res) => {
     const games = await Game.find({});
@@ -78,6 +79,9 @@ router.post("/", catchAsync(async (req, res) => {
 }))
 
 router.get("/simulate", catchAsync(async (req, res) => {
+    // if (!req.session.user_id) {
+    //     return res.redirect("/login");
+    // }
     const teams = await Team.find({});
     if (!teams) throw new AppErrors(404, "There is no team data to simulate games!");
     res.render("games/simulate", { teams });
